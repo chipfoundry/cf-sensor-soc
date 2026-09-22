@@ -59,14 +59,25 @@ the `CF_UART-v2.0.2` GitHub tag). `CF_IP_UTIL` is the clock-gate helper
 the WB wrappers instantiate.
 
 ```bash
-export GITHUB_TOKEN="$(env -u GITHUB_TOKEN gh auth token)"
-ipm install-dep --include-drafts --local-file ip/catalog.json
+python3 .github/scripts/install_ips.py
 ```
 
-Then clone the digital tags listed above into `ip/` (gitignored except
-`catalog.json` / `dependencies.json`), or `ipm install` each digital IP
-from a directory that does not list the analog drafts in
-`dependencies.json`.
+That clones the tags in `ip/dependencies.json` (analog `CF_<IP>-<ver>`,
+digital `CF_<IP>-v…`). Analog repos are private; export a GitHub token
+that can read them:
+
+```bash
+export GH_TOKEN="$(env -u GITHUB_TOKEN gh auth token)"
+python3 .github/scripts/install_ips.py
+```
+
+`ip/` is gitignored except `catalog.json` / `dependencies.json`. A local
+`ipm install-dep --include-drafts --local-file ip/catalog.json` also
+works for analog, but nests files at `ip/<IP>/<IP>/`; the installer
+symlinks `layout` / `hdl` / `verify` up one level so OpenLane paths
+resolve. CI runs the same script before harden and RTL verify. Set repo
+secret `GH_TOKEN` (the default Actions token cannot clone other private
+repos).
 
 ## GPIO
 

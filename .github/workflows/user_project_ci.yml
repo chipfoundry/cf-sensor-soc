@@ -15,6 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install catalog IPs
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN || github.token }}
+        run: python3 .github/scripts/install_ips.py
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -30,27 +35,24 @@ jobs:
       - name: Initialize Project
         run: |
           mkdir -p .cf
-          python3 <<EOF
+          python3 <<'EOF'
           import json
           import os
           from pathlib import Path
-          
-          project_name = os.path.basename(os.getcwd())
+
           project_json = Path('.cf/project.json')
-          
-          data = {
-              "project": {
-                  "name": project_name,
-                  "type": "digital",
-                  "user": "chipfoundry",
-                  "version": "1.0.0",
-                  "user_project_wrapper_hash": "",
-                  "submission_state": "Draft"
-              }
-          }
-          
-          with open(project_json, 'w') as f:
-              json.dump(data, f, indent=2)
+          project_name = os.path.basename(os.getcwd())
+          data = {}
+          if project_json.exists():
+              data = json.loads(project_json.read_text())
+          project = data.setdefault('project', {})
+          project.setdefault('name', project_name)
+          project.setdefault('type', 'digital')
+          project.setdefault('user', 'chipfoundry')
+          project.setdefault('version', '1.0.0')
+          project.setdefault('user_project_wrapper_hash', '')
+          project.setdefault('submission_state', 'Draft')
+          project_json.write_text(json.dumps(data, indent=2) + '\n')
           EOF
 
       - name: Setup Dependencies
@@ -61,6 +63,7 @@ jobs:
         run: |
           set -e
           python3 .github/scripts/get_designs.py --design ${{ github.workspace }}
+          echo "Harden sequence: $(cat harden_sequence.txt)"
           for design in $(cat harden_sequence.txt); do
             cf harden $design || exit 1
           done
@@ -84,6 +87,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install catalog IPs
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN || github.token }}
+        run: python3 .github/scripts/install_ips.py
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
@@ -99,52 +107,45 @@ jobs:
       - name: Initialize Project
         run: |
           mkdir -p .cf
-          python3 <<EOF
+          python3 <<'EOF'
           import json
           import os
           from pathlib import Path
-          
-          project_name = os.path.basename(os.getcwd())
+
           project_json = Path('.cf/project.json')
-          
-          data = {
-              "project": {
-                  "name": project_name,
-                  "type": "digital",
-                  "user": "chipfoundry",
-                  "version": "1.0.0",
-                  "user_project_wrapper_hash": "",
-                  "submission_state": "Draft"
-              }
-          }
-          
-          with open(project_json, 'w') as f:
-              json.dump(data, f, indent=2)
+          project_name = os.path.basename(os.getcwd())
+          data = {}
+          if project_json.exists():
+              data = json.loads(project_json.read_text())
+          project = data.setdefault('project', {})
+          project.setdefault('name', project_name)
+          project.setdefault('type', 'digital')
+          project.setdefault('user', 'chipfoundry')
+          project.setdefault('version', '1.0.0')
+          project.setdefault('user_project_wrapper_hash', '')
+          project.setdefault('submission_state', 'Draft')
+          project_json.write_text(json.dumps(data, indent=2) + '\n')
           EOF
 
       - name: Setup Dependencies
         run: |
           cf setup --pdk ${{ matrix.pdk }} --only-caravel --only-mcw --only-pdk --only-cocotb
 
-      - name: Configure GPIO (non-interactive)
+      - name: Configure GPIO (keep analog pad modes)
         run: |
-          python3 <<EOF
+          python3 <<'EOF'
           import json
           from pathlib import Path
-          
+
           project_json = Path('.cf/project.json')
-          with open(project_json) as f:
-              data = json.load(f)
-          
-          # Set default GPIO config (all as user input no pull)
-          gpio_config = {}
-          for gpio in range(5, 38):
-              gpio_config[str(gpio)] = "13'h0402"  # GPIO_MODE_USER_STD_INPUT_NOPULL
-          
-          data['project']['gpio_config'] = gpio_config
-          
-          with open(project_json, 'w') as f:
-              json.dump(data, f, indent=2)
+          data = json.loads(project_json.read_text()) if project_json.exists() else {}
+          project = data.setdefault('project', {})
+          if 'gpio_config' not in project:
+              gpio_config = {}
+              for gpio in range(5, 38):
+                  gpio_config[str(gpio)] = "13'h0402"
+              project['gpio_config'] = gpio_config
+              project_json.write_text(json.dumps(data, indent=2) + '\n')
           EOF
 
       - name: Run RTL Verification
@@ -176,28 +177,23 @@ jobs:
       - name: Initialize Project
         run: |
           mkdir -p .cf
-          python3 <<EOF
+          python3 <<'EOF'
           import json
           import os
           from pathlib import Path
-          
-          project_name = os.path.basename(os.getcwd())
+
           project_json = Path('.cf/project.json')
-          
-          data = {
-              "pdk": "${{ matrix.pdk }}",
-              "project": {
-                  "name": project_name,
-                  "type": "digital",
-                  "user": "chipfoundry",
-                  "version": "1.0.0",
-                  "user_project_wrapper_hash": "",
-                  "submission_state": "Draft"
-              }
-          }
-          
-          with open(project_json, 'w') as f:
-              json.dump(data, f, indent=2)
+          project_name = os.path.basename(os.getcwd())
+          data = json.loads(project_json.read_text()) if project_json.exists() else {}
+          data['pdk'] = '${{ matrix.pdk }}'
+          project = data.setdefault('project', {})
+          project.setdefault('name', project_name)
+          project.setdefault('type', 'digital')
+          project.setdefault('user', 'chipfoundry')
+          project.setdefault('version', '1.0.0')
+          project.setdefault('user_project_wrapper_hash', '')
+          project.setdefault('submission_state', 'Draft')
+          project_json.write_text(json.dumps(data, indent=2) + '\n')
           EOF
 
       - name: Setup Dependencies
@@ -210,25 +206,21 @@ jobs:
           name: design-${{ matrix.pdk }}
           path: ${{ github.workspace }}
 
-      - name: Configure GPIO (non-interactive)
+      - name: Configure GPIO (keep analog pad modes)
         run: |
-          python3 <<EOF
+          python3 <<'EOF'
           import json
           from pathlib import Path
-          
+
           project_json = Path('.cf/project.json')
-          with open(project_json) as f:
-              data = json.load(f)
-          
-          # Set default GPIO config (all as user input no pull)
-          gpio_config = {}
-          for gpio in range(5, 38):
-              gpio_config[str(gpio)] = "13'h0402"  # GPIO_MODE_USER_STD_INPUT_NOPULL
-          
-          data['project']['gpio_config'] = gpio_config
-          
-          with open(project_json, 'w') as f:
-              json.dump(data, f, indent=2)
+          data = json.loads(project_json.read_text()) if project_json.exists() else {}
+          project = data.setdefault('project', {})
+          if 'gpio_config' not in project:
+              gpio_config = {}
+              for gpio in range(5, 38):
+                  gpio_config[str(gpio)] = "13'h0402"
+              project['gpio_config'] = gpio_config
+              project_json.write_text(json.dumps(data, indent=2) + '\n')
           EOF
 
       - name: Run Precheck

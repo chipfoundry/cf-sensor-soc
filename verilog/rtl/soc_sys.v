@@ -46,11 +46,22 @@ module soc_sys (
     input         adc_eof,
     output [122:0] analog_ctrl,
 
-    input  [37:7] io_in,
-    output [37:7] io_out,
-    output [37:7] io_oeb,
+    input  [30:0] io_in,
+    output [30:0] io_out,
+    output [30:0] io_oeb,
     output [2:0]  user_irq
 );
+
+    /* Ports stay zero-based: netgen renumbers a [37:7] macro port to
+     * [30:0] while Magic keeps the literal LEF pin names, so a non-zero
+     * base shows up as a 7-bit port shift at wrapper LVS. gpio_* carries
+     * the Caravel GPIO numbering inside. */
+    wire [37:7] gpio_in = io_in;
+    wire [37:7] gpio_out;
+    wire [37:7] gpio_oeb;
+
+    assign io_out = gpio_out;
+    assign io_oeb = gpio_oeb;
 
     wire        host_valid = wbs_cyc_i & wbs_stb_i;
     wire        in_user    = (wbs_adr_i[31:20] == 12'h300);
@@ -109,7 +120,7 @@ module soc_sys (
         .ack_o(uart_ack),
         .we_i(wbs_we_i),
         .IRQ(uart_irq),
-        .rx(io_in[23]),
+        .rx(gpio_in[23]),
         .tx(uart_tx)
     );
 
@@ -125,7 +136,7 @@ module soc_sys (
         .ack_o(spi_ack),
         .we_i(wbs_we_i),
         .IRQ(spi_irq),
-        .miso(io_in[18]),
+        .miso(gpio_in[18]),
         .mosi(spi_mosi),
         .csb(spi_csb),
         .sclk(spi_sclk)
@@ -143,10 +154,10 @@ module soc_sys (
         .ack_o(i2c_ack),
         .we_i(wbs_we_i),
         .IRQ(i2c_irq),
-        .scl_i(io_in[20]),
+        .scl_i(gpio_in[20]),
         .scl_o(scl_o),
         .scl_oen_o(scl_oen),
-        .sda_i(io_in[21]),
+        .sda_i(gpio_in[21]),
         .sda_o(sda_o),
         .sda_oen_o(sda_oen)
     );
@@ -261,7 +272,7 @@ module soc_sys (
                     4'd1: cap_rdata <= {31'b0, cap_en};
                     4'd2: cap_rdata <= {22'b0, cap_count};
                     4'd3: cap_rdata <= {14'b0, cap_done, cap_busy, 6'b0, cap_ptr};
-                    4'd4: cap_rdata <= {23'b0, io_in[37:35], cap_gpio_oeb, cap_gpio_out};
+                    4'd4: cap_rdata <= {23'b0, gpio_in[37:35], cap_gpio_oeb, cap_gpio_out};
                     default: cap_rdata <= 32'b0;
                 endcase
             end
@@ -338,42 +349,42 @@ module soc_sys (
     generate
         for (gi = 7; gi <= 37; gi = gi + 1) begin : g_io
             if ((gi >= 7 && gi <= 15) || (gi >= 27 && gi <= 29) || (gi >= 31 && gi <= 34)) begin
-                assign io_out[gi] = 1'b0;
-                assign io_oeb[gi] = 1'b1;
+                assign gpio_out[gi] = 1'b0;
+                assign gpio_oeb[gi] = 1'b1;
             end
         end
     endgenerate
 
-    assign io_out[16] = spi_sclk;
-    assign io_oeb[16] = 1'b0;
-    assign io_out[17] = spi_mosi;
-    assign io_oeb[17] = 1'b0;
-    assign io_out[18] = 1'b0;
-    assign io_oeb[18] = 1'b1;
-    assign io_out[19] = spi_csb;
-    assign io_oeb[19] = 1'b0;
-    assign io_out[20] = scl_o;
-    assign io_oeb[20] = scl_oen;
-    assign io_out[21] = sda_o;
-    assign io_oeb[21] = sda_oen;
-    assign io_out[22] = uart_tx;
-    assign io_oeb[22] = 1'b0;
-    assign io_out[23] = 1'b0;
-    assign io_oeb[23] = 1'b1;
-    assign io_out[24] = tmr0_pwm0;
-    assign io_oeb[24] = 1'b0;
-    assign io_out[25] = tmr1_pwm0;
-    assign io_oeb[25] = 1'b0;
-    assign io_out[26] = tmr2_pwm0;
-    assign io_oeb[26] = 1'b0;
-    assign io_out[30] = cap_done | uart_irq | spi_irq | i2c_irq | tmr0_irq | tmr1_irq | tmr2_irq;
-    assign io_oeb[30] = 1'b0;
-    assign io_out[35] = cap_gpio_out[0];
-    assign io_oeb[35] = cap_gpio_oeb[0];
-    assign io_out[36] = cap_gpio_out[1];
-    assign io_oeb[36] = cap_gpio_oeb[1];
-    assign io_out[37] = cap_gpio_out[2];
-    assign io_oeb[37] = cap_gpio_oeb[2];
+    assign gpio_out[16] = spi_sclk;
+    assign gpio_oeb[16] = 1'b0;
+    assign gpio_out[17] = spi_mosi;
+    assign gpio_oeb[17] = 1'b0;
+    assign gpio_out[18] = 1'b0;
+    assign gpio_oeb[18] = 1'b1;
+    assign gpio_out[19] = spi_csb;
+    assign gpio_oeb[19] = 1'b0;
+    assign gpio_out[20] = scl_o;
+    assign gpio_oeb[20] = scl_oen;
+    assign gpio_out[21] = sda_o;
+    assign gpio_oeb[21] = sda_oen;
+    assign gpio_out[22] = uart_tx;
+    assign gpio_oeb[22] = 1'b0;
+    assign gpio_out[23] = 1'b0;
+    assign gpio_oeb[23] = 1'b1;
+    assign gpio_out[24] = tmr0_pwm0;
+    assign gpio_oeb[24] = 1'b0;
+    assign gpio_out[25] = tmr1_pwm0;
+    assign gpio_oeb[25] = 1'b0;
+    assign gpio_out[26] = tmr2_pwm0;
+    assign gpio_oeb[26] = 1'b0;
+    assign gpio_out[30] = cap_done | uart_irq | spi_irq | i2c_irq | tmr0_irq | tmr1_irq | tmr2_irq;
+    assign gpio_oeb[30] = 1'b0;
+    assign gpio_out[35] = cap_gpio_out[0];
+    assign gpio_oeb[35] = cap_gpio_oeb[0];
+    assign gpio_out[36] = cap_gpio_out[1];
+    assign gpio_oeb[36] = cap_gpio_oeb[1];
+    assign gpio_out[37] = cap_gpio_out[2];
+    assign gpio_oeb[37] = cap_gpio_oeb[2];
 
     assign user_irq[0] = uart_irq | spi_irq | i2c_irq;
     assign user_irq[1] = tmr0_irq | tmr1_irq | tmr2_irq;

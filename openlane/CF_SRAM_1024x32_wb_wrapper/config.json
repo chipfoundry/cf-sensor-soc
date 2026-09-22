@@ -17,7 +17,7 @@
         "dir::../../ip/CF_SRAM_1024x32/hdl/bus_wrapper/CF_SRAM_1024x32_wb_wrapper.v"
     ],
     "//VERILOG_DEFINES": ["PnR"],
-    "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
+    "VERILOG_POWER_DEFINE": "USE_POWER_PINS",
     "ERROR_ON_LINTER_ERRORS": false,
     "CLOCK_PERIOD": 25,
     "CLOCK_PORT": "wb_clk_i",
@@ -64,10 +64,7 @@
         "i_sram VPWR VGND vpwrm vgnd"
     ],
     "FP_PDN_CFG": "dir::pdn.tcl",
-    "QUIT_ON_LINTER_ERRORS": false,
-    "QUIT_ON_SYNTH_CHECKS": false,
-    "QUIT_ON_YOSYS_WARNINGS": false,
-    "GRT_OBS": [
+    "ROUTING_OBSTRUCTIONS": [
 		"met1 0 40 314 435",
 		"met2 0 40 314 435",
 		"met3 0 40 314 435",
@@ -81,8 +78,9 @@
     "GRT_ADJUSTMENT": 0,
     "GLB_RESIZER_DESIGN_OPTIMIZATIONS": true,
     "GLB_RESIZER_TIMING_OPTIMIZATIONS": true,
-    "QUIT_ON_MAGIC_DRC": false,
+    "ERROR_ON_SYNTH_CHECKS": false,
+    "ERROR_ON_MAGIC_DRC": false,
     "MAGIC_EXT_USE_GDS": false,
     "MAGIC_CAPTURE_ERRORS": false,
-    "QUIT_ON_ILLEGAL_OVERLAPS": false
+    "ERROR_ON_ILLEGAL_OVERLAPS": false
 }
