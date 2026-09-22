@@ -1,0 +1,54 @@
+# Sensor SoC
+
+ChipFoundry **sensor SoC** on Caravel: the `cf-sensor-afe` analog island
+plus UART, SPI, I2C, three 32-bit timers, and 4 KB SRAM for ADC capture.
+
+This is a separate project from `cf-sensor-afe`. Analog wrap GDS and
+placement stay on the AFE repo.
+
+## Key features
+
+* High-Z differential sensor inputs on GPIO 8–13 (`CF_BUF_HIZ`)
+* 12-bit SAR at up to 1 Msps (`CF_ADC_SAR12` + `sar_refs`)
+* Bandgap and buffered 1.2 V reference (`CF_BGR`, `CF_REFBUF`)
+* User UART / SPI / I2C / 3× `CF_TMR32` in `soc_sys`
+* `CF_SRAM_1024x32` capture buffer at `0x30010000`
+* Same `afe_wb` CSR as the AFE at `0x30000000`
+
+## Catalog IPs
+
+| IP | Version | Role |
+| --- | --- | --- |
+| [CF_BUF_HIZ](https://github.com/chipfoundry/CF_BUF_HIZ) | 0.2.4 | Sensor input buffer |
+| [CF_ADC_SAR12](https://github.com/chipfoundry/CF_ADC_SAR12) | 0.2.6 | 12-bit SAR + wrapped `sar_refs` |
+| [CF_BGR](https://github.com/chipfoundry/CF_BGR) | 0.2.7 | Bandgap bias / 1.2 V reference |
+| [CF_REFBUF](https://github.com/chipfoundry/CF_REFBUF) | 0.2.6 | Buffered `Vout` monitor |
+| [CF_UART](https://github.com/chipfoundry/CF_UART) | v2.0.2 | User UART |
+| [CF_SPI](https://github.com/chipfoundry/CF_SPI) | v2.0.1 | SPI master |
+| [CF_I2C](https://github.com/chipfoundry/CF_I2C) | v2.0.0 | I2C master |
+| [CF_TMR32](https://github.com/chipfoundry/CF_TMR32) | v2.1.0 | Timer / PWM (×3) |
+| [CF_SRAM_1024x32](https://github.com/chipfoundry/CF_SRAM_1024x32) | v1.2.3 | 4 KB SRAM |
+
+## Wishbone map
+
+| Base | Block |
+| --- | --- |
+| `0x30000000` | `afe_wb` |
+| `0x30001000` | UART |
+| `0x30002000` | SPI |
+| `0x30003000` | I2C |
+| `0x30004000` | TMR0 |
+| `0x30005000` | TMR1 |
+| `0x30006000` | TMR2 |
+| `0x30007000` | Capture / spare GPIO |
+| `0x30010000` | SRAM |
+
+## GPIO (digital steal)
+
+GPIO 16–26, 30, and 35–37 are user digital. HIZ bias pads that used
+those pins on the AFE are not bonded. Sensor, reference, and SAR analog
+pads stay analog.
+
+## Resources
+
+* Sibling analog island: [chipfoundry/cf-sensor-afe](https://github.com/chipfoundry/cf-sensor-afe)

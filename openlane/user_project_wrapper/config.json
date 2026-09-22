@@ -1,0 +1,287 @@
+{
+    "//": "Design files",
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/defines.v",
+        "dir::../../verilog/rtl/user_project_wrapper.v"
+    ],
+    "PNR_SDC_FILE": "dir::signoff.sdc",
+
+    "//": "Hardening strategy variables (elaborate-only analog macros).",
+    "SYNTH_ELABORATE_ONLY": true,
+    "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
+    "RUN_POST_GPL_DESIGN_REPAIR": false,
+    "RUN_POST_CTS_RESIZER_TIMING": false,
+    "DESIGN_REPAIR_BUFFER_INPUT_PORTS": false,
+    "PDN_ENABLE_RAILS": false,
+    "RUN_ANTENNA_REPAIR": true,
+    "GRT_ANTENNA_REPAIR_JUMPER_ONLY": true,
+    "DRT_ANTENNA_REPAIR_ITERS": 0,
+    "RUN_FILL_INSERTION": false,
+    "RUN_TAP_ENDCAP_INSERTION": false,
+    "RUN_CTS": false,
+    "RUN_IRDROP_REPORT": false,
+    "ERROR_ON_SYNTH_CHECKS": false,
+    "HOLD_VIOLATION_CORNERS": [""],
+    "IGNORE_DISCONNECTED_MODULES": [
+        "user_project_wrapper"
+    ],
+
+    "//": "Macros configurations",
+    "MACROS": {
+        "CF_BUF_HIZ": {
+            "gds": [
+                "dir::../../ip/CF_BUF_HIZ/layout/gds/CF_BUF_HIZ.gds"
+            ],
+            "lef": [
+                "dir::../../ip/CF_BUF_HIZ/layout/lef/CF_BUF_HIZ.lef"
+            ],
+            "instances": {
+                "u_cf_buf_hiz": {
+                    "location": [99.82, 650.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../ip/CF_BUF_HIZ/hdl/gl/CF_BUF_HIZ_core.v",
+                "dir::../../ip/CF_BUF_HIZ/hdl/gl/CF_BUF_HIZ.v"
+            ]
+        },
+        "CF_ADC_SAR12": {
+            "gds": [
+                "dir::../../ip/CF_ADC_SAR12/layout/gds/CF_ADC_SAR12.gds"
+            ],
+            "lef": [
+                "dir::../../ip/CF_ADC_SAR12/layout/lef/CF_ADC_SAR12.lef"
+            ],
+            "instances": {
+                "u_cf_adc_sar12": {
+                    "location": [655.57, 650.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../ip/CF_ADC_SAR12/hdl/gl/CF_ADC_SAR12_core.v",
+                "dir::../../ip/CF_ADC_SAR12/hdl/gl/CF_ADC_SAR12.v"
+            ]
+        },
+        "CF_BGR": {
+            "gds": [
+                "dir::../../ip/CF_BGR/layout/gds/CF_BGR.gds"
+            ],
+            "lef": [
+                "dir::../../ip/CF_BGR/layout/lef/CF_BGR.lef"
+            ],
+            "instances": {
+                "u_cf_bgr": {
+                    "location": [99.82, 1483.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../ip/CF_BGR/hdl/gl/CF_BGR_core.v",
+                "dir::../../ip/CF_BGR/hdl/gl/CF_BGR.v"
+            ]
+        },
+        "CF_REFBUF": {
+            "gds": [
+                "dir::../../ip/CF_REFBUF/layout/gds/CF_REFBUF.gds"
+            ],
+            "lef": [
+                "dir::../../ip/CF_REFBUF/layout/lef/CF_REFBUF.lef"
+            ],
+            "instances": {
+                "u_cf_refbuf": {
+                    "location": [838.29, 1483.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../ip/CF_REFBUF/hdl/gl/CF_REFBUF_core.v",
+                "dir::../../ip/CF_REFBUF/hdl/gl/CF_REFBUF.v"
+            ]
+        },
+        "CF_ADC_SAR12_sar_refs": {
+            "gds": [
+                "dir::../../ip/CF_ADC_SAR12/layout/gds/CF_ADC_SAR12_sar_refs.gds"
+            ],
+            "lef": [
+                "dir::CF_ADC_SAR12_sar_refs.lef"
+            ],
+            "instances": {
+                "u_cf_adc_sar12_sar_refs": {
+                    "location": [1458.81, 650.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../ip/CF_ADC_SAR12/hdl/gl/CF_ADC_SAR12_sar_refs_core.v",
+                "dir::../../ip/CF_ADC_SAR12/hdl/gl/CF_ADC_SAR12_sar_refs.v"
+            ]
+        },
+        "soc_sys": {
+            "gds": [
+                "dir::../../gds/soc_sys.gds"
+            ],
+            "lef": [
+                "dir::../../lef/soc_sys.lef"
+            ],
+            "instances": {
+                "u_soc_sys": {
+                    "location": [15.06, 115.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../verilog/gl/soc_sys.v"
+            ],
+            "spef": {
+                "min_*": [
+                    "dir::../../spef/multicorner/soc_sys.min.spef"
+                ],
+                "nom_*": [
+                    "dir::../../spef/multicorner/soc_sys.nom.spef"
+                ],
+                "max_*": [
+                    "dir::../../spef/multicorner/soc_sys.max.spef"
+                ]
+            },
+            "lib": {
+                "*": "dir::../../lib/soc_sys.lib"
+            }
+        },
+        "CF_SRAM_1024x32_wb_wrapper": {
+            "gds": [
+                "dir::../../gds/CF_SRAM_1024x32_wb_wrapper.gds"
+            ],
+            "lef": [
+                "dir::../../lef/CF_SRAM_1024x32_wb_wrapper.lef"
+            ],
+            "instances": {
+                "u_sram": {
+                    "location": [1300.00, 115.00],
+                    "orientation": "N"
+                }
+            },
+            "nl": [
+                "dir::../../verilog/gl/CF_SRAM_1024x32_wb_wrapper.v"
+            ],
+            "spef": {
+                "min_*": [
+                    "dir::../../spef/multicorner/CF_SRAM_1024x32_wb_wrapper.min.spef"
+                ],
+                "nom_*": [
+                    "dir::../../spef/multicorner/CF_SRAM_1024x32_wb_wrapper.nom.spef"
+                ],
+                "max_*": [
+                    "dir::../../spef/multicorner/CF_SRAM_1024x32_wb_wrapper.max.spef"
+                ]
+            },
+            "lib": {
+                "*": "dir::../../lib/CF_SRAM_1024x32_wb_wrapper.lib"
+            }
+        }
+    },
+    "PDN_MACRO_CONNECTIONS": [
+        "u_cf_buf_hiz vccd1 vssd1 vpwr vgnd",
+        "u_cf_adc_sar12 vccd1 vssd1 vpwr vgnd",
+        "u_cf_bgr vccd1 vssd1 vpwr vgnd",
+        "u_cf_refbuf vccd1 vssd1 vpwr vgnd",
+        "u_cf_adc_sar12_sar_refs vccd1 vssd1 vpwr vgnd",
+        "u_soc_sys vccd1 vssd1 vccd1 vssd1",
+        "u_sram vccd1 vssd1 VPWR VGND"
+    ],
+
+    "//": "PDN. Default LibreLane met4/met5 vias onto wrap met4 PG pins (SRAM model).",
+    "PDN_HORIZONTAL_HALO": 10,
+    "PDN_VERTICAL_HALO": 10,
+    "PDN_VOFFSET": 5,
+    "PDN_HOFFSET": 5,
+    "PDN_VWIDTH": 3.1,
+    "PDN_HWIDTH": 3.1,
+    "PDN_VSPACING": 15.5,
+    "PDN_HSPACING": 15.5,
+    "PDN_VPITCH": 180,
+    "PDN_HPITCH": 180,
+    "ERROR_ON_PDN_VIOLATIONS": false,
+
+    "//": "SRAM-style parent stream-out: Magic black-boxes wrap GDS (GDS_FILE + FIXED_BBOX). Skip Magic DRC on analog OBS datatypes. MAGIC_CAPTURE_ERRORS false so OBS 67/10 68/10 69/10 do not fail get_bbox. XOR vs KLayout is expected if Magic keeps DEF TAPER that KLayout drops — do not fail the flow on that.",
+    "RUN_MAGIC_DRC": false,
+    "MAGIC_DRC_USE_GDS": false,
+    "ERROR_ON_MAGIC_DRC": false,
+    "RUN_MAGIC_STREAMOUT": true,
+    "RUN_MAGIC_WRITE_LEF": true,
+    "MAGIC_CAPTURE_ERRORS": false,
+    "PRIMARY_GDSII_STREAMOUT_TOOL": "magic",
+    "MAGIC_MACRO_STD_CELL_SOURCE": "macro",
+    "ERROR_ON_XOR_ERROR": false,
+    "MAGIC_EXT_USE_GDS": false,
+    "MAGIC_EXT_ABSTRACT_CELLS": [
+        "^CF_BUF_HIZ_core$",
+        "^CF_ADC_SAR12_core$",
+        "^CF_BGR_core$",
+        "^CF_REFBUF_core$",
+        "^CF_ADC_SAR12_sar_refs_core$",
+        "^CF_SRAM_1024x32$"
+    ],
+
+    "DRT_THREADS": 1,
+    "MAX_TRANSITION_CONSTRAINT": 1.5,
+
+    "//": "Analog NDR. Trunks are 0.42 µm on met2–met4. DRT TAPER shrinks at min-width analog pins (HIZ/BGR met2 0.14 µm). Do not NDR analog_ctrl or PDN.",
+    "NON_DEFAULT_RULES": {
+        "ANALOG_WIDE": {
+            "width": ["met2", "0.42", "met3", "0.42", "met4", "0.42"],
+            "spacing": ["met2", "0.42", "met3", "0.60", "met4", "0.60"]
+        }
+    },
+    "DRT_ASSIGN_NDR": {
+        "^afe_(vout|vref|nbias|refhi|refby2)$": "ANALOG_WIDE",
+        "^analog_io": "ANALOG_WIDE"
+    },
+
+    "//": "Keep analog_ctrl off met3 on the SAR north pin row. Core met3 pads are 0.30 µm on a 0.65 µm pitch; parent met3 vias fail m3.2. Wrap LEF pins there are met2. Do not OBS wrap PG straps (parent y >= 1168.5). Narrow met3/met4 OBS is analog_ctrl[9] (pd_ana) through SAR vs the core south met3/met4 pad at parent (845.445,665). East met4 OBS keeps afe_ibias on the met3 PORT (m4.2 vs next analog pad); do not raise it to wrap PG at y=998.225. via3 OBS is SAR ibias2p5u / ibias2p5u_1: wrap already has via3, parent TAPER must not stack (via3.1). afe_ibias is not ANALOG_WIDE so it can land on the 0.46 µm met3 pin without TAPER. BUF wrap already has via2 on the ibias/vbpt island landings; parent ANALOG_WIDE must not stack a second via2 (via2.1a). Analog macros are spaced >=300 µm so sky130 700 µm FOM/poly windows are not analog-only (tapeout f1/pd). SAR x is aligned so wrap met4 centers hit parent PDN vias (m4.5ab).",
+    "ROUTING_OBSTRUCTIONS": [
+        ["met3", 670.57, 1166.85, 1143.81, 1168.25],
+        ["met3", 844.50, 664.50, 850.00, 1168.00],
+        ["met4", 844.50, 664.50, 850.00, 1168.00],
+        ["met4", 1140.50, 991.00, 1144.00, 998.00],
+        ["via3", 1143.30, 992.90, 1143.90, 997.80],
+        ["via2", 267.30, 983.40, 267.85, 983.95],
+        ["via2", 267.30, 963.30, 267.85, 963.90],
+        ["via2", 324.80, 834.40, 325.35, 834.95],
+        ["via2", 328.70, 798.10, 329.25, 798.70]
+    ],
+
+    "//": "Fixed configurations for caravel. You should NOT edit this section",
+    "DESIGN_NAME": "user_project_wrapper",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": [0, 0, 2920, 3520],
+    "FP_DEF_TEMPLATE": "dir::fixed_dont_change/user_project_wrapper.def",
+    "VDD_NETS": [
+        "vccd1",
+        "vccd2",
+        "vdda1",
+        "vdda2"
+    ],
+    "GND_NETS": [
+        "vssd1",
+        "vssd2",
+        "vssa1",
+        "vssa2"
+    ],
+    "PDN_CORE_RING": true,
+    "PDN_CORE_RING_VWIDTH": 3.1,
+    "PDN_CORE_RING_HWIDTH": 3.1,
+    "PDN_CORE_RING_VOFFSET": 12.45,
+    "PDN_CORE_RING_HOFFSET": 12.45,
+    "PDN_CORE_RING_VSPACING": 1.7,
+    "PDN_CORE_RING_HSPACING": 1.7,
+    "CLOCK_PORT": "wb_clk_i",
+    "SIGNOFF_SDC_FILE": "dir::signoff.sdc",
+    "MAGIC_DEF_LABELS": false,
+    "CLOCK_PERIOD": 25,
+    "MAGIC_ZEROIZE_ORIGIN": false,
+    "meta": {
+        "version": 2
+    }
+}

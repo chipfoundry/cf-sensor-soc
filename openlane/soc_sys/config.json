@@ -1,0 +1,40 @@
+{
+    "DESIGN_NAME": "soc_sys",
+    "VERILOG_FILES": [
+        "dir::../../verilog/rtl/defines.v",
+        "dir::../../verilog/rtl/afe_wb.v",
+        "dir::../../verilog/rtl/soc_sys.v",
+        "dir::../../ip/CF_IP_UTIL/hdl/cf_util_lib.v",
+        "dir::../../ip/CF_UART/hdl/rtl/CF_UART.v",
+        "dir::../../ip/CF_UART/hdl/rtl/bus_wrappers/CF_UART_WB.v",
+        "dir::../../ip/CF_SPI/hdl/rtl/spi_master.v",
+        "dir::../../ip/CF_SPI/hdl/rtl/CF_SPI.v",
+        "dir::../../ip/CF_SPI/hdl/rtl/bus_wrappers/CF_SPI_WB.v",
+        "dir::../../ip/CF_I2C/hdl/rtl/axis_fifo.v",
+        "dir::../../ip/CF_I2C/hdl/rtl/i2c_master.v",
+        "dir::../../ip/CF_I2C/hdl/rtl/i2c_master_wbs_16.v",
+        "dir::../../ip/CF_I2C/hdl/rtl/bus_wrappers/CF_I2C_WB.v",
+        "dir::../../ip/CF_TMR32/hdl/rtl/CF_TMR32.v",
+        "dir::../../ip/CF_TMR32/hdl/rtl/bus_wrappers/CF_TMR32_WB.v"
+    ],
+    "SYNTH_USE_PG_PINS_DEFINES": "USE_POWER_PINS",
+    "CLOCK_PERIOD": 25,
+    "CLOCK_PORT": "wb_clk_i",
+    "FP_SIZING": "absolute",
+    "DIE_AREA": [0, 0, 1200, 500],
+    "IO_PIN_ORDER_CFG": "dir::pin_order.cfg",
+    "PNR_SDC_FILE": "dir::base.sdc",
+    "SIGNOFF_SDC_FILE": "dir::base.sdc",
+    "VDD_NETS": ["vccd1"],
+    "GND_NETS": ["vssd1"],
+    "PDN_MULTILAYER": false,
+    "MAX_TRANSITION_CONSTRAINT": 1.0,
+    "MAX_FANOUT_CONSTRAINT": 16,
+    "MAGIC_DEF_LABELS": false,
+    "RUN_IRDROP_REPORT": false,
+    "QUIT_ON_SYNTH_CHECKS": false,
+    "ERROR_ON_LINTER_ERRORS": false,
+    "meta": {
+        "version": 2
+    }
+}
