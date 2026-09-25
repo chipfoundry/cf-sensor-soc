@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 """Clone catalog analog + digital IPs into ip/ at the pinned tags.
 
-Analog packages are private ChipFoundry repos. Digital IPs (and CF_IP_UTIL)
-are public. ipm --local-file catalog.json only covers analog, and a local
-ipm extract nests files at ip/<IP>/<IP>/layout; this script clones the
-Git tags so layout/hdl/verify land where the OpenLane configs point.
-
-The default Actions GITHUB_TOKEN cannot read other private repos. Set a
-repo/org secret GH_TOKEN (PAT or GitHub App token with contents:read on
-the analog IPs) for CI harden/verify.
+Analog packages and digital IPs (including CF_IP_UTIL) are public
+ChipFoundry repos. ipm --local-file catalog.json only covers analog, and a
+local ipm extract nests files at ip/<IP>/<IP>/layout; this script clones
+the Git tags so layout/hdl/verify land where the OpenLane configs point.
 """
 
 from __future__ import annotations
@@ -68,16 +64,7 @@ def clone(name: str, version: str, token: str) -> None:
         subprocess.run(cmd, check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError as exc:
         stderr = (exc.stderr or "").replace(token, "***") if token else (exc.stderr or "")
-        private = name in ANALOG
-        hint = ""
-        if private:
-            hint = (
-                "\nAnalog IP is a private chipfoundry repo. Set secret GH_TOKEN to a "
-                "PAT/App token that can read chipfoundry/CF_BUF_HIZ, CF_ADC_SAR12, "
-                "CF_BGR, and CF_REFBUF. The default Actions GITHUB_TOKEN only covers "
-                "this repository."
-            )
-        raise SystemExit(f"failed to clone {name} @{tag}: {stderr}{hint}") from exc
+        raise SystemExit(f"failed to clone {name} @{tag}: {stderr}") from exc
 
     git_dir = dest / ".git"
     if git_dir.exists():
