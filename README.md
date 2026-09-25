@@ -43,17 +43,17 @@ register (`+0xFF10`) before using that peripheral.
 
 | IP | Version | Role |
 | --- | --- | --- |
-| [CF_BUF_HIZ](https://github.com/chipfoundry/CF_BUF_HIZ) | 0.2.5 | Sensor input buffer |
-| [CF_ADC_SAR12](https://github.com/chipfoundry/CF_ADC_SAR12) | 0.2.7 | 12-bit SAR + wrapped `sar_refs` |
-| [CF_BGR](https://github.com/chipfoundry/CF_BGR) | 0.2.8 | Bandgap bias / 1.2 V reference |
-| [CF_REFBUF](https://github.com/chipfoundry/CF_REFBUF) | 0.2.7 | Buffered `Vout` monitor |
+| [CF_BUF_HIZ](https://github.com/chipfoundry/CF_BUF_HIZ) | 0.2.6 | Sensor input buffer |
+| [CF_ADC_SAR12](https://github.com/chipfoundry/CF_ADC_SAR12) | 0.2.8 | 12-bit SAR + wrapped `sar_refs` |
+| [CF_BGR](https://github.com/chipfoundry/CF_BGR) | 0.2.9 | Bandgap bias / 1.2 V reference |
+| [CF_REFBUF](https://github.com/chipfoundry/CF_REFBUF) | 0.2.8 | Buffered `Vout` monitor |
 | [CF_UART](https://github.com/chipfoundry/CF_UART) | v2.0.2 | User UART |
 | [CF_SPI](https://github.com/chipfoundry/CF_SPI) | v2.0.1 | SPI master |
 | [CF_I2C](https://github.com/chipfoundry/CF_I2C) | v2.0.0 | I2C master |
 | [CF_TMR32](https://github.com/chipfoundry/CF_TMR32) | v2.1.0 | 32-bit timer / PWM (×3) |
 | [CF_SRAM_1024x32](https://github.com/chipfoundry/CF_SRAM_1024x32) | v1.2.3 | 4 KB data SRAM |
 
-Analog drafts install from `ip/catalog.json`. Digital IP is public
+Analog packages install from `ip/catalog.json`. Digital IP is public
 marketplace (UART v2.0.1 has a stale marketplace sha256; this tree uses
 the `CF_UART-v2.0.2` GitHub tag). `CF_IP_UTIL` is the clock-gate helper
 the WB wrappers instantiate.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Clone catalog analog + digital IPs into ip/ at the pinned tags.
 
-Analog drafts are private ChipFoundry repos. Digital IPs (and CF_IP_UTIL)
+Analog packages are private ChipFoundry repos. Digital IPs (and CF_IP_UTIL)
 are public. ipm --local-file catalog.json only covers analog, and a local
 ipm extract nests files at ip/<IP>/<IP>/layout; this script clones the
 Git tags so layout/hdl/verify land where the OpenLane configs point.
