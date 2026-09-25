@@ -19,10 +19,10 @@ placement stay on the AFE repo.
 
 | IP | Version | Role |
 | --- | --- | --- |
-| [CF_BUF_HIZ](https://github.com/chipfoundry/CF_BUF_HIZ) | 0.2.4 | Sensor input buffer |
-| [CF_ADC_SAR12](https://github.com/chipfoundry/CF_ADC_SAR12) | 0.2.6 | 12-bit SAR + wrapped `sar_refs` |
-| [CF_BGR](https://github.com/chipfoundry/CF_BGR) | 0.2.7 | Bandgap bias / 1.2 V reference |
-| [CF_REFBUF](https://github.com/chipfoundry/CF_REFBUF) | 0.2.6 | Buffered `Vout` monitor |
+| [CF_BUF_HIZ](https://github.com/chipfoundry/CF_BUF_HIZ) | 0.2.5 | Sensor input buffer |
+| [CF_ADC_SAR12](https://github.com/chipfoundry/CF_ADC_SAR12) | 0.2.7 | 12-bit SAR + wrapped `sar_refs` |
+| [CF_BGR](https://github.com/chipfoundry/CF_BGR) | 0.2.8 | Bandgap bias / 1.2 V reference |
+| [CF_REFBUF](https://github.com/chipfoundry/CF_REFBUF) | 0.2.7 | Buffered `Vout` monitor |
 | [CF_UART](https://github.com/chipfoundry/CF_UART) | v2.0.2 | User UART |
 | [CF_SPI](https://github.com/chipfoundry/CF_SPI) | v2.0.1 | SPI master |
 | [CF_I2C](https://github.com/chipfoundry/CF_I2C) | v2.0.0 | I2C master |
