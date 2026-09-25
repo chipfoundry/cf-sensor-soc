@@ -1,0 +1,1 @@
+soc_sys CF_SRAM_1024x32_wb_wrapper user_project_wrapper 
