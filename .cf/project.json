@@ -3,7 +3,7 @@
     "name": "cf-sensor-soc",
     "type": "digital",
     "user": "jdicorpo",
-    "version": "2",
+    "version": "3",
     "github_repo_url": "https://github.com/chipfoundry/cf-sensor-soc",
     "gpio_config": {
       "5": "13'h0403",
@@ -40,7 +40,7 @@
       "36": "13'h1800",
       "37": "13'h1800"
     },
-    "user_project_wrapper_hash": "",
+    "user_project_wrapper_hash": "f75608f77b8b141db501b694267af5e4c18d4d1622438622d5c0b08647f00d38",
     "submission_state": "Draft",
     "platform_project_id": "019d8f06-5296-40a5-9810-65a1012c99e4"
   }
